@@ -1,0 +1,13 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<body>
+<h2>Spring Security Example</h2>
+<p th:text="'Time: ' + ${time}" />
+<form action="/logout" method="post">
+    <input type="hidden"
+           name="${_csrf.parameterName}"
+           value="${_csrf.token}"/>
+    <input type="submit" value="Logout">
+</form>
+</body>
+</html>
