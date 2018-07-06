@@ -10,20 +10,20 @@ import java.time.LocalDateTime;
 @Controller
 public class WebController {
 
-    @GetMapping("/greeting")
-    public String greeting() {
-        return "greeting";
+    @GetMapping("/user")
+    public String user() {
+        return "user";
     }
 
     @RequestMapping("/")
     public String defaultPage(ModelMap map) {
         map.addAttribute("time", LocalDateTime.now().toString());
-        return "user-page";
+        return "page";
     }
 
-    @RequestMapping("/user-page")
+    @RequestMapping("/page")
     public String userPage(ModelMap map) {
         map.addAttribute("time", LocalDateTime.now().toString());
-        return "user-page";
+        return "page";
     }
 }
