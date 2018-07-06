@@ -1,11 +1,9 @@
 package com.example.web;
 
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import java.time.LocalDateTime;
 
@@ -13,13 +11,18 @@ import java.time.LocalDateTime;
 public class WebController {
 
     @GetMapping("/greeting")
-    public String greeting(@RequestParam(name = "name", required = false, defaultValue = "World") String name, Model model) {
-        model.addAttribute("name", name);
+    public String greeting() {
         return "greeting";
     }
 
     @RequestMapping("/")
-    public String handleRequest2(ModelMap map) {
+    public String defaultPage(ModelMap map) {
+        map.addAttribute("time", LocalDateTime.now().toString());
+        return "user-page";
+    }
+
+    @RequestMapping("/user-page")
+    public String userPage(ModelMap map) {
         map.addAttribute("time", LocalDateTime.now().toString());
         return "user-page";
     }
