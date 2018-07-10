@@ -23,13 +23,17 @@ public class WebSecurityConfig {
     @Autowired
     public CustomUserDetailsService customUserDetailsService;
 
+    @Autowired
+    public AdminUserDetailsService adminUserDetailsService;
+
+
     @Configuration
     @Order(1)
     public class AdminSecurityConfig extends WebSecurityConfigurerAdapter {
         @Override
         protected void configure(HttpSecurity http) throws Exception {
             http
-                    .antMatcher("/admin").authorizeRequests().anyRequest().hasRole("ADMIN")
+                    .antMatcher("/admin*").authorizeRequests().anyRequest().hasRole("ADMIN")
                     .and()
                     .formLogin()
                     .loginPage("/admin-login")
@@ -44,7 +48,7 @@ public class WebSecurityConfig {
 
         @Override
         protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-            auth.userDetailsService(customUserDetailsService);
+            auth.userDetailsService(adminUserDetailsService);
         }
     }
 
