@@ -23,10 +23,6 @@ public class WebSecurityConfig {
     @Autowired
     public CustomUserDetailsService customUserDetailsService;
 
-    @Autowired
-    public AdminUserDetailsService adminUserDetailsService;
-
-
     @Configuration
     @Order(1)
     public class AdminSecurityConfig extends WebSecurityConfigurerAdapter {
@@ -48,7 +44,7 @@ public class WebSecurityConfig {
 
         @Override
         protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-            auth.userDetailsService(adminUserDetailsService);
+            auth.userDetailsService(customUserDetailsService);
         }
     }
 
