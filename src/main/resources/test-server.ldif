@@ -1,0 +1,82 @@
+version: 1
+
+dn: dc=example,dc=com
+objectClass: organization
+objectClass: dcObject
+objectClass: top
+dc: example
+o: example.com
+
+dn: cn=admin,dc=example,dc=com
+objectClass: organizationalRole
+objectClass: simpleSecurityObject
+cn: admin
+description: LDAP administrator
+userPassword: password
+
+dn: ou=admins,dc=example,dc=com
+objectClass: top
+objectClass: groupOfUniqueNames
+cn: Admin
+uniqueMember: uid=curie,dc=example,dc=com
+uniqueMember: uid=boyle,dc=example,dc=com
+uniqueMember: uid=nobel,dc=example,dc=com
+uniqueMember: uid=pasteur,dc=example,dc=com
+uniqueMember: uid=localhost,dc=example,dc=com
+ou: admin
+
+dn: uid=curie,dc=example,dc=com
+objectClass: top
+objectClass: person
+objectClass: organizationalPerson
+objectClass: inetOrgPerson
+cn: Marie Curie
+sn: Curie
+mail: curie@ldap.forumsys.com
+uid: curie
+userPassword: password
+
+dn: uid=nobel,dc=example,dc=com
+objectClass: top
+objectClass: person
+objectClass: organizationalPerson
+objectClass: inetOrgPerson
+cn: Alfred Nobel
+sn: Nobel
+mail: nobel@ldap.forumsys.com
+uid: nobel
+userPassword: password
+
+dn: uid=boyle,dc=example,dc=com
+objectClass: top
+objectClass: person
+objectClass: organizationalPerson
+objectClass: inetOrgPerson
+cn: Robert Boyle
+sn: Boyle
+mail: boyle@ldap.forumsys.com
+telephoneNumber: 999-867-5309
+uid: boyle
+userPassword: password
+
+dn: uid=pasteur,dc=example,dc=com
+objectClass: top
+objectClass: person
+objectClass: organizationalPerson
+objectClass: inetOrgPerson
+cn: Louis Pasteur
+sn: Pasteur
+mail: pasteur@ldap.forumsys.com
+telephoneNumber: 602-214-4978
+uid: pasteur
+
+dn: uid=localhost,dc=example,dc=com
+objectClass: top
+objectClass: person
+objectClass: organizationalPerson
+objectClass: inetOrgPerson
+cn: localhost
+sn: localhost
+mail: localhost@ldap.forumsys.com
+telephoneNumber: 602-214-4978
+uid: localhost

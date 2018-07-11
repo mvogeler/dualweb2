@@ -1,6 +1,7 @@
-package com.example.web;
+package com.example.web.security;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.annotation.Order;
@@ -21,10 +22,37 @@ public class WebSecurityConfig {
     }
 
     @Autowired
+    public AdminUserDetailsService adminUserDetailsService;
+
+    @Autowired
     public CustomUserDetailsService customUserDetailsService;
 
     @Configuration
     @Order(1)
+    @ConditionalOnProperty(prefix = "server.ssl.", name = "enabled", havingValue = "true")
+    public class SslAdminSecurityConfig extends WebSecurityConfigurerAdapter {
+        @Override
+        protected void configure(HttpSecurity http) throws Exception {
+            http.csrf().disable();
+            http.httpBasic().disable();
+            http.authorizeRequests()
+                    .antMatchers("/admin").hasRole("ADMIN")
+                    .antMatchers("/user").hasRole("USER")
+                    .and()
+                    .x509().subjectPrincipalRegex("(.*)").userDetailsService(adminUserDetailsService)
+                    .and()
+                    .anonymous().disable();
+        }
+
+        @Override
+        protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+            auth.userDetailsService(adminUserDetailsService);
+        }
+    }
+
+    @Configuration
+    @Order(1)
+    @ConditionalOnProperty(prefix = "server.ssl.", name = "enabled", havingValue = "false")
     public class AdminSecurityConfig extends WebSecurityConfigurerAdapter {
         @Override
         protected void configure(HttpSecurity http) throws Exception {
@@ -44,12 +72,13 @@ public class WebSecurityConfig {
 
         @Override
         protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-            auth.userDetailsService(customUserDetailsService);
+            auth.userDetailsService(adminUserDetailsService);
         }
     }
 
     @Configuration
     @Order(2)
+    @ConditionalOnProperty(prefix = "server.ssl.", name = "enabled", havingValue = "false")
     public class UserSecurityConfig extends WebSecurityConfigurerAdapter {
         @Override
         protected void configure(HttpSecurity http) throws Exception {
