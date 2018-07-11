@@ -62,13 +62,10 @@ public class LdapService {
         String name = id;
 
         if (isUsingCerts) {
-            System.out.println("using certs");
             try {
                 name = LdapUtils.getStringValue(new LdapName(id), "cn");
 
                 //TODO check rest of DN?  Like O, C, OU?
-                System.out.println("LDAP-" + name);
-
             } catch (InvalidNameException e) {
                 e.printStackTrace();
             }
@@ -97,7 +94,6 @@ public class LdapService {
 
         if (!authorities.contains(new SimpleGrantedAuthority("ROLE_USER"))) {
             authorities.add(new SimpleGrantedAuthority("ROLE_USER"));
-            System.out.println("USER");
         }
 
         return authorities;

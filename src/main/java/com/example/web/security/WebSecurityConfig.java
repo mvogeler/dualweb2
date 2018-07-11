@@ -20,7 +20,7 @@ public class WebSecurityConfig {
     public static PasswordEncoder encoder() {
         return new BCryptPasswordEncoder();
     }
-
+    
     @Autowired
     public AdminUserDetailsService adminUserDetailsService;
 
@@ -72,6 +72,7 @@ public class WebSecurityConfig {
 
         @Override
         protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+            auth.eraseCredentials(false);
             auth.userDetailsService(adminUserDetailsService);
         }
     }
@@ -82,9 +83,7 @@ public class WebSecurityConfig {
     public class UserSecurityConfig extends WebSecurityConfigurerAdapter {
         @Override
         protected void configure(HttpSecurity http) throws Exception {
-            http
-                    .antMatcher("/user*").authorizeRequests().anyRequest().hasRole("USER")
-                    .and()
+            http.authorizeRequests().antMatchers("/user").permitAll().and()
                     .formLogin()
                     .loginPage("/user-login")
                     .loginProcessingUrl("/user-login")
@@ -98,6 +97,7 @@ public class WebSecurityConfig {
         @Override
         protected void configure(AuthenticationManagerBuilder auth) throws Exception {
             auth.userDetailsService(customUserDetailsService);
+
         }
     }
 

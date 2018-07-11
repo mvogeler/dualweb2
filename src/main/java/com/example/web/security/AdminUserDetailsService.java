@@ -3,15 +3,12 @@ package com.example.web.security;
 import com.example.web.ldap.LdapService;
 import com.example.web.ldap.Person;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-
-import static org.springframework.security.core.context.SecurityContextHolder.getContext;
 
 @Service
 public class AdminUserDetailsService implements UserDetailsService {
